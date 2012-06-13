@@ -6,3 +6,5 @@ settings_local.py
 ve
 *#
 *.egg-info/
+dist/
+build/
