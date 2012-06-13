@@ -10,7 +10,7 @@ except:
 
 setup(name='python-timelines',
       version=version,
-      description="timespan and scheduling support for Python",
+      description="timespan and scheduling helpers for Python",
       long_description=long_description,
       classifiers=[
         "Development Status :: 4 - Beta",
