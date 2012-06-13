@@ -8,7 +8,7 @@ try:
 except:
     long_description = ""
 
-setup(name='python-timelines',
+setup(name='timelines',
       version=version,
       description="timespan and scheduling helpers for Python",
       long_description=long_description,
