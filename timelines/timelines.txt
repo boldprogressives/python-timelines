@@ -1,7 +1,8 @@
 >>> import datetime
 >>> from timelines import timespan, timelayer
 
-A timespan object has a start time and an end time.  It can be created either by specifyinga start time and an elapsed time, or by specifying both start and end times:
+A timespan object has a start time and an end time.  It can be created either by specifying a start time and an elapsed time, or by specifying both start and end times:
+
 >>> span1 = timespan(datetime.datetime(1984, 11, 26), datetime.timedelta(1))
 >>> span2 = timespan(datetime.datetime(1984, 11, 26) + datetime.timedelta(2), datetime.datetime(1984, 11, 26) + datetime.timedelta(2, 50))
 >>> span1.start
@@ -10,38 +11,44 @@ datetime.datetime(1984, 11, 26, 0, 0)
 datetime.timedelta(1)
 
 The elapsed time of a timespan is the timedelta between its start and end times:
+
 >>> span1.elapsed == span1.end - span1.start
 True
 
-A timelayer object is a bag of non-overlapping timespans which know the order in which they occur:
->>> layer = timelayer(span1, span2)
+A timelayer object is a sorted bag of non-overlapping timespans which know the order in which they occur:
+
+>>> layer = timelayer(span2, span1)
 >>> list(layer) == [span1, span2]
 True
 
 Just like a timespan, a timelayer knows its own start and end times:
+
 >>> layer.start == span1.start
 True
 >>> layer.end == span2.end
 True
 
 The elapsed duration of a timelayer is the sum of the elapsed durations of the timespans it contains, NOT the delta between its start and end times:
+
 >>> layer.elapsed == span1.elapsed + span2.elapsed
 True
 >>> layer.elapsed == layer.end - layer.start
 False
 
 You can add new timespans to a timelayer:
+
 >>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(1), datetime.timedelta(0, 600)))
 
 However, you cannot add new timespans which overlap any existing timespans:
+
 >>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(1), datetime.timedelta(2)))
 Traceback (most recent call last):
 ...
 RuntimeError
 
-You can also add constraints to a timelayer. Constraints allow you
-to freeze the start time and/or end time of a timelayer.  New
-timespans cannot be added to a layer if they fail its constraints:
+You can also add constraints to a timelayer. Constraints allow you to freeze the start time and/or end time of a timelayer.  
+New timespans cannot be added to a layer if they fail its constraints:
+
 >>> layer.freeze_start()
 >>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(3), datetime.timedelta(2)))
 Traceback (most recent call last):
