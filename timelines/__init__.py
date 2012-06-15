@@ -68,10 +68,10 @@ class timelayer(object):
 
         if self.start_frozen:
             if _layer.start < self.start_frozen:
-                raise RuntimeError
+                raise RuntimeError("%s is earlier than frozen start %s" % (repr(_layer.start), repr(self.start_frozen)))
         if self.end_frozen:
             if _layer.end > self.end_frozen:
-                raise RuntimeError
+                raise RuntimeError("%s is later than frozen end %s" % (repr(_layer.end), repr(self.end_frozen)))
         self._timespans = list(sorted(self._timespans + list(timespans)))
 
     

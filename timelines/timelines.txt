@@ -72,5 +72,5 @@ New timespans cannot be added to a layer if they fail its constraints:
 >>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(4), datetime.timedelta(2)))
 Traceback (most recent call last):
 ...
-RuntimeError
+RuntimeError: datetime.datetime(1984, 11, 22, 0, 0) is earlier than frozen start datetime.datetime(1984, 11, 25, 0, 0)
 
