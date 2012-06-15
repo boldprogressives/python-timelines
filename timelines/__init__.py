@@ -16,6 +16,9 @@ class timespan(object):
     def __repr__(self):
         return "<timespan %s => %s>" % (repr(self.start), repr(self.end))
 
+    def __cmp__(self, other):
+        return cmp(self.start, other.start)
+
 class timelayer(object):
     def __init__(self, *timespans):
         timespans = sorted(timespans)
@@ -54,7 +57,7 @@ class timelayer(object):
         _layer = timelayer(*timespans)
         if _layer.start <= self.start:
             if _layer.end >= self.start:
-                raise RuntimeError
+                raise RuntimeError("%s VS %s" % (_layer, self))
         if _layer.start >= self.start:
             if _layer.end <= self.end:
                 raise RuntimeError
