@@ -7,6 +7,10 @@ try:
     long_description = open("timelines/timelines.txt").read()
 except:
     long_description = ""
+try:
+    long_description = "%s\n%s" % (long_description, open("NEWS.txt").read())
+except:
+    pass
 
 setup(name='timelines',
       version=version,

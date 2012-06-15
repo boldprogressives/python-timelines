@@ -1,0 +1,8 @@
+Changelog
+=========
+
+0.2 (6-15-2012)
+---------------
+
+* Fix a bug in the guaranteed-sortedness of timelayers, by implementing timespan.__cmp___
+* Exceptions during timelayer.add now provide more information about why the operation failed
