@@ -50,16 +50,16 @@ datetime.datetime(1984, 11, 28, 0, 0, 50)
 
 However, you cannot add new timespans which overlap any existing timespans:
 
->>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(1), datetime.timedelta(2)))
+>>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(2), datetime.timedelta(2)))
 Traceback (most recent call last):
 ...
-RuntimeError
+RuntimeError: <timelayer datetime.datetime(1984, 11, 24, 0, 0) => datetime.datetime(1984, 11, 26, 0, 0) (contains 1 timespans)> overlaps layer start datetime.datetime(1984, 11, 25, 0, 0)
 
 You can also add constraints to a timelayer. Constraints allow you to freeze the start time and/or end time of a timelayer.  
 New timespans cannot be added to a layer if they fail its constraints:
 
 >>> layer.freeze_start()
->>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(3), datetime.timedelta(2)))
+>>> layer.add(timespan(datetime.datetime(1984, 11, 26) - datetime.timedelta(4), datetime.timedelta(2)))
 Traceback (most recent call last):
 ...
 RuntimeError

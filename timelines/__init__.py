@@ -57,10 +57,10 @@ class timelayer(object):
         _layer = timelayer(*timespans)
         if _layer.start <= self.start:
             if _layer.end >= self.start:
-                raise RuntimeError("%s VS %s" % (_layer, self))
+                raise RuntimeError("%s overlaps layer start %s" % (_layer, repr(self.start)))
         if _layer.start >= self.start:
             if _layer.end <= self.end:
-                raise RuntimeError
+                raise RuntimeError("%s overlaps layer end %s" % (_layer, repr(self.end)))
         if self.start_frozen:
             if _layer.start < self.start_frozen:
                 raise RuntimeError
