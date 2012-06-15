@@ -5,4 +5,7 @@ Changelog
 ---------------
 
 * Fix a bug in the guaranteed-sortedness of timelayers, by implementing timespan.__cmp___
+* Fix a bug in the collision detection of timelayer.add, by checking collisions against each
+  timespan in the existing layer independently, instead of just checking against the layer's
+  boundaries
 * Exceptions during timelayer.add now provide more information about why the operation failed

@@ -55,12 +55,17 @@ class timelayer(object):
         
     def add(self, *timespans):
         _layer = timelayer(*timespans)
-        if _layer.start <= self.start:
-            if _layer.end >= self.start:
-                raise RuntimeError("%s overlaps layer start %s" % (_layer, repr(self.start)))
-        if _layer.start >= self.start:
-            if _layer.end <= self.end:
-                raise RuntimeError("%s overlaps layer end %s" % (_layer, repr(self.end)))
+        for timespan in self:
+            if _layer.start <= timespan.start:
+                if _layer.end >= timespan.start:
+                    raise RuntimeError("%s overlaps %s" % (_layer, timespan))
+
+            # If the layer starts later than one of our timespans, 
+            # then it must start after that timespan ends
+            if _layer.start >= timespan.start:
+                if _layer.start <= timespan.end:
+                    raise RuntimeError("%s overlaps %s" % (_layer, timespan))
+
         if self.start_frozen:
             if _layer.start < self.start_frozen:
                 raise RuntimeError
