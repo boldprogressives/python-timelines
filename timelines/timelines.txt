@@ -65,7 +65,7 @@ Traceback (most recent call last):
 ...
 RuntimeError: <timelayer datetime.datetime(1984, 11, 26, 0, 5) => datetime.datetime(1984, 11, 26, 0, 25) (contains 1 timespans)> overlaps <timespan datetime.datetime(1984, 11, 26, 0, 0) => datetime.datetime(1984, 11, 27, 0, 0)>
 
-You can also add constraints to a timelayer. Constraints allow you to freeze the start time and/or end time of a timelayer.  
+You can also add constraints to a timelayer. Constraints allow you to freeze the start time and/or end time of a timelayer, or to put an upper bound on the total elapsed time of a layer.
 New timespans cannot be added to a layer if they fail its constraints:
 
 >>> layer.freeze_start()
@@ -74,3 +74,14 @@ Traceback (most recent call last):
 ...
 RuntimeError: datetime.datetime(1984, 11, 22, 0, 0) is earlier than frozen start datetime.datetime(1984, 11, 25, 0, 0)
 
+>>> layer.freeze_elapsed(datetime.timedelta(3))
+>>> layer.add(timespan(datetime.datetime(1985, 11, 26), datetime.datetime(1985, 11, 29)))
+Traceback (most recent call last):
+...
+RuntimeError: Total elapsed time datetime.timedelta(4, 650) is greater than frozen allowed elapsed time datetime.timedelta(3)
+
+>>> layer.freeze_end(datetime.datetime(1985, 11, 27))
+>>> layer.add(timespan(datetime.datetime(1985, 11, 26, 23), datetime.datetime(1985, 11, 27, 1)))
+Traceback (most recent call last):
+...
+RuntimeError: datetime.datetime(1985, 11, 27, 1, 0) is later than frozen end datetime.datetime(1985, 11, 27, 0, 0)

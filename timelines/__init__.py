@@ -25,6 +25,7 @@ class timelayer(object):
         self._timespans = list(timespans)
         self.start_frozen = None
         self.end_frozen = None
+        self.elapsed_frozen = None
 
     def __repr__(self):
         return "<timelayer %s => %s (contains %s timespans)>" % (
@@ -37,6 +38,11 @@ class timelayer(object):
     def freeze_end(self, constraint=None):
         constraint = constraint or self.end
         self.end_frozen = constraint
+
+    def freeze_elapsed(self, constraint):
+        if not isinstance(constraint, datetime.timedelta):
+            raise TypeError("elapsed constraint must be a datetime.timedelta")
+        self.elapsed_frozen = constraint
 
     @property
     def start(self):
@@ -72,6 +78,10 @@ class timelayer(object):
         if self.end_frozen:
             if _layer.end > self.end_frozen:
                 raise RuntimeError("%s is later than frozen end %s" % (repr(_layer.end), repr(self.end_frozen)))
+        if self.elapsed_frozen:
+            if _layer.elapsed + self.elapsed > self.elapsed_frozen:
+                raise RuntimeError("Total elapsed time %s is greater than frozen allowed elapsed time %s" % (repr(_layer.elapsed + self.elapsed), repr(self.elapsed_frozen)))
+
         self._timespans = list(sorted(self._timespans + list(timespans)))
 
     
