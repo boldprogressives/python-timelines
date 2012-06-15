@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.2 (6-15-2012)
----------------
+0.2 (2012-06-15)
+----------------
 
 * Implement timelayer.freeze_elapsed constraint, allowing the user to cap the total allowed
   elapsed time of a layer to a given timedelta
@@ -11,3 +11,8 @@ Changelog
   timespan in the existing layer independently, instead of just checking against the layer's
   boundaries
 * Exceptions during timelayer.add now provide more information about why the operation failed
+
+0.1 (2012-06-13)
+----------------
+
+* Initial release, everything is new!
